@@ -1,4 +1,10 @@
 @extends('layouts.admin')
+@section('css')
+<!-- Pick date -->
+<link rel="stylesheet" href="{{ asset('admin/vendor/pickadate/themes/default.css') }}">
+<link rel="stylesheet" href="{{ asset('admin/vendor/pickadate/themes/default.date.css') }}">
+
+@endsection
 @section('content')
    <!--**********************************
             Content body start
@@ -147,4 +153,14 @@
             Content body end
         ***********************************-->
 
+@endsection
+@section('js')
+
+ <!-- pickdate -->
+ <script src="{{ asset('admin/vendor/pickadate/picker.js') }}"></script>
+ <script src="{{ asset('admin/vendor/pickadate/picker.time.js') }}"></script>
+ <script src="{{ asset('admin/vendor/pickadate/picker.date.js') }}"></script>
+
+ <!-- Pickdate -->
+ <script src="{{ asset('admin/js/plugins-init/pickadate-init.js') }}"></script>
 @endsection
