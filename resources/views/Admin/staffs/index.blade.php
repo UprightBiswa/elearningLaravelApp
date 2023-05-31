@@ -75,8 +75,15 @@
                                                         <td>{{ $staff->status ? 'Active' : 'Not Active' }}</td>
                                                         <td>
                                                         <a href="{{ url('admin/staffs/' . $staff->id . '/edit') }}" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                        <a href="{{ url('admin/staffs', $staff->id) }}" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
                                                         <a href="{{ url('admin/staffs', $staff) }}" class="btn btn-sm btn-info"><i class="la la-eye"></i></a>
+                                                        <a href="#" class="btn btn-sm btn-danger" onclick="event.preventDefault(); if (confirm('Are you sure you want to delete this staff member?')) { document.getElementById('delete-form').submit(); }">
+                                                            <i class="la la-trash-o"></i>
+                                                        </a>
+                                                        <form id="delete-form" action="{{ url('admin/staffs/' . $staff->id) }}" method="POST" style="display: none;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                        </form>
+
                                                         </td>
 
                                                     </tr>
@@ -133,7 +140,7 @@
                                                         </li>
                                                     </ul>
                                                     <a class="btn btn-outline-primary btn-rounded mt-3 px-4"
-                                                        href="{{ url('admin/staffs/show', $staff->id) }}">Read More</a>
+                                                        href="{{ url('admin/staffs', $staff) }}">Read More</a>
                                                 </div>
                                             </div>
                                         </div>

@@ -113,7 +113,7 @@ class StaffController extends Controller
         $staff->name = $validatedData['name'];
         $staff->email = $validatedData['email'];
         $staff->phone_number = $validatedData['phone_number'];
-        $staff->password = $validatedData['password'];
+        $staff->password =Hash::make($validatedData['password']);
         $staff->address = $validatedData['address'];
         $staff->status = $validatedData['status'];
         $staff->save();
@@ -129,8 +129,11 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $staff)
     {
-        //
+        $staff->delete();
+
+        return redirect('admin/staffs')->with('status', 'Staff member deleted successfully.');
     }
+
 }
