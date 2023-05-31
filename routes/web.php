@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Student\StudentDashboardController;
 
@@ -30,13 +32,33 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function () {
         Route::get('/adminDashboard', [AdminDashboardController::class, 'index']);
           //stuff for admin
           Route::controller(StaffController::class)->group(function () {
-            Route::get('/stuffs', 'index');
-            Route::get('/stuffs/create', 'create');
-            Route::post('/stuffs', 'store');
-            Route::get('/stuffs/{stuff}', 'show');
-            Route::get('/stuffs/{stuff}/edit', 'edit');
-            Route::put('/stuffs/{stuff}', 'update');
-            Route::delete('/stuffs/{stuff}', 'destroy');
+            Route::get('/staffs', 'index');
+            Route::get('/staffs/create', 'create');
+            Route::post('/staffs', 'store');
+            Route::get('/staffs/{staff}', 'show');
+            Route::get('/staffs/{staff}/edit', 'edit');
+            Route::put('/staffs/{staff}', 'update');
+            Route::delete('/staffs/{staff}', 'destroy');
+        });
+          //Student for admin
+          Route::controller(StudentController::class)->group(function () {
+            Route::get('/students', 'index');
+            Route::get('/students/create', 'create');
+            Route::post('/students', 'store');
+            Route::get('/students/{student}', 'show');
+            Route::get('/students/{student}/edit', 'edit');
+            Route::put('/students/{student}', 'update');
+            Route::delete('/students/{student}', 'destroy');
+        });
+          //course for admin
+          Route::controller(CourseController::class)->group(function () {
+            Route::get('/courses', 'index');
+            Route::get('/courses/create', 'create');
+            Route::post('/courses', 'store');
+            Route::get('/courses/{course}', 'show');
+            Route::get('/courses/{course}/edit', 'edit');
+            Route::put('/courses/{course}', 'update');
+            Route::delete('/courses/{course}', 'destroy');
         });
     });
 

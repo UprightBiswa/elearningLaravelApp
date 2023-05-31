@@ -7,6 +7,11 @@
     <div class="content-body">
         <!-- row -->
         <div class="container-fluid">
+            @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
             <div class="row page-titles mx-0">
                 <div class="col-sm-6 p-md-0">
                     <div class="welcome-text">
@@ -37,7 +42,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">All Staff </h4>
-                                    <a href="add-staff.html" class="btn btn-primary">+ Add new</a>
+                                    <a href="{{ url('admin/staffs/create') }}" class="btn btn-primary">+ Add new</a>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -46,33 +51,36 @@
                                                 <tr>
                                                     <th></th>
                                                     <th>Name</th>
-                                                    <th>Designation</th>
                                                     <th>Mobile</th>
                                                     <th>Email</th>
                                                     <th>Address</th>
-                                                    <th>Joining Date</th>
+                                                    <th>Role</th>
+                                                    <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td><img class="rounded-circle" width="35"
-                                                            src="images/profile/small/pic1.jpg" alt=""></td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>Clerk</td>
-                                                    <td><a href="javascript:void(0);"><strong>123 456 7890</strong></a></td>
-                                                    <td><a href="javascript:void(0);"><strong>info@example.com</strong></a>
-                                                    </td>
-                                                    <td>#8901 Demo Road </td>
-                                                    <td>2011/04/25</td>
-                                                    <td>
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-primary"><i
-                                                                class="la la-pencil"></i></a>
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i
-                                                                class="la la-trash-o"></i></a>
-                                                    </td>
-                                                </tr>
+                                                @foreach ($staffMembers as $staff)
+                                                    <tr>
+                                                        <td><img class="rounded-circle" width="35"
+                                                                src="{{ asset('admin/images/profile/small/pic1.jpg') }}"
+                                                                alt=""></td>
+                                                        <td>{{ $staff->name }}</td>
+                                                        <td>{{ $staff->phone_number }}</td>
+                                                        <td><a
+                                                                href="mailto:{{ $staff->email }}"><strong>{{ $staff->email }}</strong></a>
+                                                        </td>
+                                                        <td>{{ $staff->address }}</td>
+                                                        <td>{{ $staff->role->name }}</td>
+                                                        <td>{{ $staff->status ? 'Active' : 'Not Active' }}</td>
+                                                        <td>
+                                                        <a href="{{ url('admin/staffs/' . $staff->id . '/edit') }}" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
+                                                        <a href="{{ url('admin/staffs', $staff->id) }}" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
+                                                        <a href="{{ url('admin/staffs', $staff) }}" class="btn btn-sm btn-info"><i class="la la-eye"></i></a>
+                                                        </td>
 
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -81,87 +89,56 @@
                         </div>
                         <div id="grid-view" class="tab-pane fade col-lg-12">
                             <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                                    <div class="card card-profile">
-                                        <div class="card-header justify-content-end pb-0">
-                                            <div class="dropdown">
-                                                <button class="btn btn-link" type="button" data-toggle="dropdown">
-                                                    <span class="dropdown-dots fs--1"></span>
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-right border py-0">
-                                                    <div class="py-2">
-                                                        <a class="dropdown-item" href="javascript:void(0);">Edit</a>
-                                                        <a class="dropdown-item text-danger"
-                                                            href="javascript:void(0);">Delete</a>
+                                @foreach ($staffMembers as $staff)
+                                    <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                                        <div class="card card-profile">
+                                            <div class="card-header justify-content-end pb-0">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-link" type="button" data-toggle="dropdown">
+                                                        <span class="dropdown-dots fs--1"></span>
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-right border py-0">
+                                                        <div class="py-2">
+                                                            <a class="dropdown-item"
+                                                                href="{{ url('admin/staffs/edit', $staff->id) }}">Edit</a>
+                                                            <a class="dropdown-item text-danger"
+                                                                href="{{ url('admin/staffs/destroy', $staff->id) }}">Delete</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="card-body pt-2">
-                                            <div class="text-center">
-                                                <div class="profile-photo">
-                                                    <img src="images/profile/small/pic2.jpg" width="100"
-                                                        class="img-fluid rounded-circle" alt="">
-                                                </div>
-                                                <h3 class="my-4">Alexander</h3>
-                                                <ul class="list-group mb-3 list-group-flush">
-                                                    <li class="list-group-item px-0 d-flex justify-content-between">
-                                                        <span class="mb-0">Designation :</span><strong>Clerk</strong>
-                                                    </li>
-                                                    <li class="list-group-item px-0 d-flex justify-content-between">
-                                                        <span class="mb-0">Phone No. :</span><strong>+01 123 456
-                                                            7890</strong>
-                                                    </li>
-                                                    <li class="list-group-item px-0 d-flex justify-content-between">
-                                                        <span class="mb-0">Email:</span><strong>info@example.com</strong>
-                                                    </li>
-                                                    <li class="list-group-item px-0 d-flex justify-content-between">
-                                                        <span class="mb-0">Address:</span><strong>#8901 Marmora
-                                                            Road</strong>
-                                                    </li>
-                                                </ul>
-                                                <a class="btn btn-outline-primary btn-rounded mt-3 px-4"
-                                                    href="staff-profile.html">Read More</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                                    <div class="card card-profile">
-                                        <div class="card-header justify-content-end pb-0">
-                                            <div class="dropdown">
-                                                <button class="btn btn-link" type="button" data-toggle="dropdown">
-                                                    <span class="dropdown-dots fs--1"></span>
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-right border py-0">
-                                                    <div class="py-2">
-                                                        <a class="dropdown-item" href="javascript:void(0);">Edit</a>
-                                                        <a class="dropdown-item text-danger" href="javascript:void(0);">Delete</a>
+                                            <div class="card-body pt-2">
+                                                <div class="text-center">
+                                                    <div class="profile-photo">
+                                                        <img src="{{ asset('admin/images/profile/small/pic2.jpg') }}"
+                                                            width="100" class="img-fluid rounded-circle" alt="">
                                                     </div>
+                                                    <h3 class="my-4">{{ $staff->name }}</h3>
+                                                    <ul class="list-group mb-3 list-group-flush">
+                                                        <li class="list-group-item px-0 d-flex justify-content-between">
+                                                            <span class="mb-0">Designation:</span>
+                                                            <strong>{{ $staff->role->name }}</strong>
+                                                        </li>
+                                                        <li class="list-group-item px-0 d-flex justify-content-between">
+                                                            <span class="mb-0">Phone No.:</span>
+                                                            <strong>{{ $staff->phone_number }}</strong>
+                                                        </li>
+                                                        <li class="list-group-item px-0 d-flex justify-content-between">
+                                                            <span class="mb-0">Email:</span>
+                                                            <strong>{{ $staff->email }}</strong>
+                                                        </li>
+                                                        <li class="list-group-item px-0 d-flex justify-content-between">
+                                                            <span class="mb-0">Address:</span>
+                                                            <strong>{{ $staff->address }}</strong>
+                                                        </li>
+                                                    </ul>
+                                                    <a class="btn btn-outline-primary btn-rounded mt-3 px-4"
+                                                        href="{{ url('admin/staffs/show', $staff->id) }}">Read More</a>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-body pt-2">
-                                            <div class="text-center">
-                                                <div class="profile-photo">
-                                                    <img src="images/profile/small/pic4.jpg" width="100" class="img-fluid rounded-circle" alt="">
-                                                </div>
-                                                <h3 class="my-4">Amelia</h3>
-                                                <ul class="list-group mb-3 list-group-flush">
-                                                    <li class="list-group-item px-0 d-flex justify-content-between">
-                                                        <span class="mb-0">Designation :</span><strong>Clerk</strong></li>
-                                                    <li class="list-group-item px-0 d-flex justify-content-between">
-                                                        <span class="mb-0">Phone No. :</span><strong>+01 123 456 7890</strong></li>
-                                                    <li class="list-group-item px-0 d-flex justify-content-between">
-                                                        <span class="mb-0">Email:</span><strong>info@example.com</strong></li>
-                                                    <li class="list-group-item px-0 d-flex justify-content-between">
-                                                        <span class="mb-0">Address:</span><strong>#8901 Marmora Road</strong></li>
-                                                </ul>
-                                                <a class="btn btn-outline-primary btn-rounded mt-3 px-4" href="staff-profile.html">Read More</a>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -169,14 +146,9 @@
             </div>
         </div>
     </div>
-    </div>
-    </div>
 @endsection
 @section('js')
-
-
     <!-- Datatable -->
     <script src="{{ asset('admin/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/js/plugins-init/datatables.init.js') }}"></script>
-
 @endsection

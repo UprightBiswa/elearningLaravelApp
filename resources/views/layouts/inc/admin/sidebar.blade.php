@@ -38,8 +38,8 @@
                         <span class="nav-text">Staff</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="{{ url('admin/stuffs') }}">All Staff</a></li>
-                        <li><a href="{{ url('admin/stuffs/create') }}">Add Staff</a></li>
+                        <li><a href="{{ url('admin/staffs') }}">All Staff</a></li>
+                        <li><a href="{{ url('admin/staffs/create') }}">Add Staff</a></li>
 
                     </ul>
                 </li>
