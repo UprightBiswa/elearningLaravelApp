@@ -73,10 +73,10 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $students)
+    public function show(User $student)
     {
 
-        return view('Admin.students.show', compact('students'));
+        return view('Admin.students.show', compact('student'));
     }
 
 
@@ -86,9 +86,9 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $students)
+    public function edit(User $student)
     {
-        return view('Admin.students.edit', compact('students'));
+        return view('Admin.students.edit', compact('student'));
     }
 
 
@@ -119,6 +119,7 @@ class StudentController extends Controller
         $students->save();
 
         return redirect('admin/students')->with('status', 'students member updated successfully.');
+        
     }
 
 
