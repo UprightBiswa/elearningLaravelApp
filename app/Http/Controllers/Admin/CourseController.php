@@ -1,13 +1,13 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Course;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Http\Controllers\Controller;
 
 class CourseController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +15,9 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view('Admin.courses.index');
+        $courses = Course::all();
+
+        return view('Admin.courses.index', compact('courses'));
     }
 
     /**
@@ -36,7 +38,20 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'course_name' => 'required',
+            'course_description' => 'required',
+            'course_code' => 'required',
+            'course_price' => 'required|numeric',
+            'course_duration' => 'required',
+            'start_from' => 'required',
+        ]);
+        $validatedData['start_from'] = Carbon::createFromFormat('d F, Y', $validatedData['start_from'])->format('Y-m-d');
+
+        // dd($request->all());
+        Course::create($validatedData);
+
+        return redirect('admin/courses')->with('status', 'Course created successfully.');
     }
 
     /**
@@ -45,9 +60,9 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Course $course)
     {
-        //
+        return view('Admin.courses.show', compact('course'));
     }
 
     /**
@@ -56,9 +71,9 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Course $course)
     {
-        //
+        return view('Admin.courses.edit', compact('course'));
     }
 
     /**
@@ -68,10 +83,26 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+
+
+public function update(Request $request, $id)
+{
+    $validatedData = $request->validate([
+        'course_name' => 'required',
+        'course_description' => 'required',
+        'course_code' => 'required',
+        'course_price' => 'required|numeric',
+        'course_duration' => 'required',
+        'start_from' => 'required',
+    ]);
+
+    $validatedData['start_from'] = Carbon::createFromFormat('d F, Y', $validatedData['start_from'])->format('Y-m-d');
+
+    $course = Course::findOrFail($id);
+    $course->update($validatedData);
+
+    return redirect('admin/courses')->with('status', 'Course updated successfully.');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -81,6 +112,9 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $course = Course::findOrFail($id);
+        $course->delete();
+
+        return redirect('admin/courses')->with('status', 'Course deleted successfully.');
     }
 }

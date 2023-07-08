@@ -99,27 +99,27 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $students)
+    public function update(Request $request, User $student)
     {
         $validatedData = $request->validate([
             'name' => 'required',
-            'email' => ['required', 'email', Rule::unique('users')->ignore($students->id)],
+            'email' => ['required', 'email', Rule::unique('users')->ignore($student->id)],
             'phone_number' => 'required',
             'password' => 'required',
             'address' => 'required',
             'status' => 'required|in:0,1',
         ]);
 
-        $students->name = $validatedData['name'];
-        $students->email = $validatedData['email'];
-        $students->phone_number = $validatedData['phone_number'];
-        $students->password =Hash::make($validatedData['password']);
-        $students->address = $validatedData['address'];
-        $students->status = $validatedData['status'];
-        $students->save();
+        $student->name = $validatedData['name'];
+        $student->email = $validatedData['email'];
+        $student->phone_number = $validatedData['phone_number'];
+        $student->password =Hash::make($validatedData['password']);
+        $student->address = $validatedData['address'];
+        $student->status = $validatedData['status'];
+        $student->save();
 
         return redirect('admin/students')->with('status', 'students member updated successfully.');
-        
+
     }
 
 
@@ -130,9 +130,9 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $students)
+    public function destroy(User $student)
     {
-        $students->delete();
+        $student->delete();
 
         return redirect('admin/students')->with('status', 'students member deleted successfully.');
     }
