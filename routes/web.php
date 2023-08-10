@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ClassController;
+use App\Http\Controllers\Admin\NotesController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\StudentController;
@@ -59,6 +61,26 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function () {
             Route::get('/courses/{course}/edit', 'edit');
             Route::put('/courses/{course}', 'update');
             Route::delete('/courses/{course}', 'destroy');
+        });
+         //Classes for admin
+         Route::controller(ClassController::class)->group(function () {
+            Route::get('/classes', 'index');
+            Route::get('/classes/create', 'create');
+            Route::post('/classes', 'store');
+            Route::get('/classes/{class}', 'show');
+            Route::get('/classes/{class}/edit', 'edit');
+            Route::put('/classes/{class}', 'update');
+            Route::delete('/classes/{class}', 'destroy');
+        });
+        //Notes for admin
+        Route::controller(NotesController::class)->group(function () {
+            Route::get('/notes', 'index');
+            Route::get('/notes/create', 'create');
+            Route::post('/notes', 'store');
+            Route::get('/notes/{note}', 'show');
+            Route::get('/notes/{note}/edit', 'edit');
+            Route::put('/notes/{note}', 'update');
+            Route::delete('/notes/{note}', 'destroy');
         });
     });
 

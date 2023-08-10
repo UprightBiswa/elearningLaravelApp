@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Classes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Note extends Model
 {
@@ -16,8 +17,8 @@ class Note extends Model
         'class_id',
     ];
 
-    public function courseClass()
+    public function classes()
     {
-        return $this->belongsTo(CourseClass::class, 'class_id');
+        return $this->belongsTo(Classes::class, 'class_id');
     }
 }

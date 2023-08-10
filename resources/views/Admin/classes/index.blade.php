@@ -17,14 +17,14 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>All Notes</h4>
+                    <h4>All Classes</h4>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0);">Notes</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0);">All Notes</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('http://127.0.0.1:8000/admin/adminDashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0);">Classes</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0);">All Classes</a></li>
                 </ol>
             </div>
         </div>
@@ -41,8 +41,8 @@
                     <div id="list-view" class="tab-pane fade active show col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">All Notes</h4>
-                                <a href="{{ url('admin/notes/create') }}" class="btn btn-primary">+ Add new</a>
+                                <h4 class="card-title">All Classes</h4>
+                                <a href="{{ url('admin/classes/create') }}" class="btn btn-primary">+ Add new</a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -50,28 +50,28 @@
                                         <thead>
                                             <tr>
                                                 <th></th>
-                                                <th>Subject</th>
+                                                <th>Class Name</th>
                                                 <th>Date</th>
-                                                <th>Class</th>
-                                                <th>File</th>
+                                                <th>Time</th>
+                                                <th>Course</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($notes as $note)
+                                            @foreach ($classes as $class)
                                             <tr>
                                                 <td><img class="rounded-circle" width="35" src="images/profile/small/pic1.jpg" alt=""></td>
-                                                <td>{{ $note->note_subject }}</td>
-                                                <td>{{ $note->note_date }}</td>
-                                                <td>{{ $note->Classes->class_name }}</td>
-                                                <td>{{ $note->note_file }}</td>
+                                                <td>{{ $class->class_name }}</td>
+                                                <td>{{ $class->class_date }}</td>
+                                                <td>{{ $class->class_time }}</td>
+                                                <td>{{ $class->course->course_name }}</td>
                                                 <td>
-                                                    <a href="{{ url('admin/notes/' . $note->id) }}" class="btn btn-sm btn-info"><i class="la la-eye"></i></a>
-                                                    <a href="{{ url('admin/notes', $note->id . '/edit') }}" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                    <a href="#" class="btn btn-sm btn-danger" onclick="event.preventDefault(); if (confirm('Are you sure you want to delete this note?')) { document.getElementById('delete-form').submit(); }">
+                                                    <a href="{{ url('admin/classes/' . $class->id) }}" class="btn btn-sm btn-info"><i class="la la-eye"></i></a>
+                                                    <a href="{{ url('admin/classes', $class->id . '/edit') }}" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
+                                                    <a href="#" class="btn btn-sm btn-danger" onclick="event.preventDefault(); if (confirm('Are you sure you want to delete this staff member?')) { document.getElementById('delete-form').submit(); }">
                                                         <i class="la la-trash-o"></i>
                                                     </a>
-                                                    <form id="delete-form" action="{{ url('admin/notes/' . $note->id) }}" method="POST" style="display: none;">
+                                                    <form id="delete-form" action="{{ url('admin/classes/' . $class->id) }}" method="POST" style="display: none;">
                                                         @csrf
                                                         @method('DELETE')
                                                     </form>
@@ -86,7 +86,7 @@
                     </div>
                     <div id="grid-view" class="tab-pane fade col-lg-12">
                         <div class="row">
-                            @foreach ($notes as $note)
+                            @foreach ($classes as $class)
                             <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                                 <div class="card card-profile">
                                     <div class="card-header justify-content-end pb-0">
@@ -96,7 +96,7 @@
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right border py-0">
                                                 <div class="py-2">
-                                                    <a class="dropdown-item" href="{{ url('admin/Notes', $note->id) }}/edit">Edit</a>
+                                                    <a class="dropdown-item" href="{{ url('admin/classes', $class->id) }}/edit">Edit</a>
                                                     <a class="dropdown-item text-danger" href="javascript:void(0);">Delete</a>
                                                 </div>
                                             </div>
@@ -107,23 +107,30 @@
                                             <div class="profile-photo">
                                                 <img src ="{{ asset('admin/images/profile/small/pic2.jpg') }}" width="100" class="img-fluid rounded-circle" alt="">
                                             </div>
-                                            <h3 class="my-4">{{ $note->Classes->class_name }}</h3>
+                                            <h3 class="my-4">{{ $class->Class_name }}</h3>
                                             <ul class="list-group mb-3 list-group-flush">
                                                 <li class="list-group-item px-0 d-flex justify-content-between">
                                                     <span class="mb-0">Description:</span>
-                                                    <strong>{{ $note->not_date }}</strong>
+                                                    <strong>{{ $class->Class_description }}</strong>
                                                 </li>
                                                 <li class="list-group-item px-0 d-flex justify-content-between">
                                                     <span class="mb-0">Code:</span>
-                                                    <strong>{{ $note->note_file }}</strong>
+                                                    <strong>{{ $class->Class_code }}</strong>
                                                 </li>
                                                 <li class="list-group-item px-0 d-flex justify-content-between">
-                                                    <span class="mb-0">Code:</span>
-                                                    <strong>{{ $note->note_subject }}</strong>
+                                                    <span class="mb-0">Price:</span>
+                                                    <strong>{{ $class->Class_price }}</strong>
                                                 </li>
-
+                                                <li class="list-group-item px-0 d-flex justify-content-between">
+                                                    <span class="mb-0">Duration:</span>
+                                                    <strong>{{ $class->Class_duration }}</strong>
+                                                </li>
+                                                <li class="list-group-item px-0 d-flex justify-content-between">
+                                                    <span class="mb-0">Start Date:</span>
+                                                    <strong>{{ $class->start_from }}</strong>
+                                                </li>
                                             </ul>
-                                            <a class="btn btn-outline-primary btn-rounded mt-3 px-4" href="{{ url('admin/Notes', $note->id) }}">Read More</a>
+                                            <a class="btn btn-outline-primary btn-rounded mt-3 px-4" href="{{ url('admin/classes', $class->id) }}">Read More</a>
                                         </div>
                                     </div>
                                 </div>

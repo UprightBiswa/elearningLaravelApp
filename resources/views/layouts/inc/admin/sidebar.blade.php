@@ -31,7 +31,16 @@
 
                     </ul>
                 </li>
+                <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="la la-graduation-cap"></i>
+                        <span class="nav-text">Classes</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ url('admin/classes') }}">All Classes</a></li>
+                        <li><a href="{{ url('admin/classes/create') }}">Add Classes</a></li>
 
+                    </ul>
+                </li>
 
                 <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                         <i class="la la-users"></i>

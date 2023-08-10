@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class CourseClass extends Model
+use App\Models\Course;
+class Classes extends Model
 {
     use HasFactory;
 
@@ -18,7 +18,9 @@ class CourseClass extends Model
         // Define the fillable attributes here
         'course_id',
         'class_name',
-        'class_description',
+        'class_date',
+        'class_time',
+
     ];
 
     /**
@@ -37,7 +39,8 @@ class CourseClass extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function course()
-    {
-        return $this->belongsTo(Course::class);
-    }
+{
+    return $this->belongsTo(Course::class, 'course_id');
+}
+
 }
