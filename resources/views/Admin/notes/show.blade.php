@@ -50,7 +50,7 @@
                                         <strong>Class</strong>
                                         <span class="mb-0">{{ $note->Classes->class_name  }}</span>
                                     </li>
-                                    
+
                                 </ul>
                             </div>
                             <div class="card-footer pt-0 pb-0 text-center">
@@ -98,6 +98,16 @@
                             <li class="list-group-item -0 px-0">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence was created for the bliss of souls like mine.</li>
                             <li class="list-group-item -0 px-0">A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.</li>
                             <li class="list-group-item border-0 px-0">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing.</li>
+                            <li class="list-group-item border-0 px-0">
+                                <h4 class="text-primary">View Note</h4>
+                                <!-- Display PDF using <object> element -->
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <object data="{{ asset('storage/' . $note->note_file) }}" type="application/pdf" class="embed-responsive-item">
+                                        <!-- If PDF is not supported, show a message or link -->
+                                        <p>Your browser does not support PDF viewing. You can <a href="{{ asset('storage/' . $note->note_file) }}">download the PDF</a> instead.</p>
+                                    </object>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>

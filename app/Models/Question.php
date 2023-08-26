@@ -18,4 +18,8 @@ class Question extends Model
     {
         return $this->belongsTo(Exam::class);
     }
+    public function AnswerOption()
+    {
+        return $this->hasMany(AnswerOption::class);
+    }
 }

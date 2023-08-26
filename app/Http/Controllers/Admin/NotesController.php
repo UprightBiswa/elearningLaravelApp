@@ -98,7 +98,7 @@ class NotesController extends Controller
     {
         $request->validate([
             'note_subject' => 'required',
-            'note_date' => 'required|date_format:d-m-y',
+            'note_date' => 'required',
             'class_id' => 'required|exists:classes,id',
         ]);
 
@@ -110,7 +110,7 @@ class NotesController extends Controller
             $noteData['note_file'] = $filePath;
         }
 
-        $noteData['note_date'] = Carbon::createFromFormat('d-m-y', $noteData['note_date'])->format('Y-m-d');
+        $noteData['note_date'] = Carbon::createFromFormat('d F, Y', $noteData['note_date'])->format('Y-m-d');
 
         $note = Note::findOrFail($id);
         $note->update($noteData);

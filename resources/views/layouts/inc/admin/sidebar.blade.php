@@ -63,13 +63,31 @@
                 </li>
                 <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                         <i class="la la-book"></i>
-                        <span class="nav-text">Exam</span>
+                        <span class="nav-text">Exams</span>
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="{{ url('admin/exams') }}">All Exams</a></li>
                         <li><a href="{{ url('admin/exams/create') }}">Add Exams</a></li>
                     </ul>
                 </li>
+                <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="la la-gift"></i>
+                        <span class="nav-text">Videos</span>
+                    </a>
+                    <ul aria-expanded="false">
+                        <li><a href="{{ url('admin/videos') }}">All Videos</a></li>
+                        <li><a href="{{ url('admin/videos/create') }}">Add Videos</a></li>
+                    </ul>
+                </li>
+                <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="la la-gift"></i>
+                    <span class="nav-text">Qustions</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ url('admin/questions') }}">All questions</a></li>
+                    <li><a href="{{ url('admin/questions/create') }}">Add questions</a></li>
+                </ul>
+            </li>
             </ul>
         </div>
     </div>

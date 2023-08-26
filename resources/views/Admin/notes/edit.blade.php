@@ -68,15 +68,20 @@
                                             </div>
 										</div>
 										<div class="col-lg-12 col-md-12 col-sm-12">
-											<div class="form-group">
-												<label class="form-label">File</label>
-												<input class="form-control-file" type="file" name="note_file">
-											</div>
-										</div>
+                                            <div class="form-group">
+                                                <label class="form-label">File</label>
+                                                <input class="form-control-file" type="file" name="note_file">
+                                                @if ($note->note_file)
+                                                <br>
+                                                <p>Current File: <a href="{{ asset('storage/' . $note->note_file) }}" target="_blank">{{ $note->note_file }}</a></p>
+                                                @endif
+                                            </div>
+                                        </div>
+
 										<div class="col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group">
 												<label class="form-label">Date</label>
-                                                <input name="note_date" class="datepicker-default form-control" id="note_date" placeholder="d-m-y" value="{{ \Carbon\Carbon::createFromFormat('Y-m-d', $note->note_date)->format('d-m-y') }}" required>
+                                                <input name="note_date" class="datepicker-default form-control" id="note_date" placeholder="d-m-y" value="{{ \Carbon\Carbon::createFromFormat('Y-m-d', $note->note_date)->format('d F, Y') }}" required>
 											</div>
 										</div>
 

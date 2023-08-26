@@ -2,11 +2,15 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ExamController;
 use App\Http\Controllers\Admin\ClassController;
 use App\Http\Controllers\Admin\NotesController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\VideosController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\QuestionController;
+use App\Http\Controllers\Admin\AnswerOptionController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Student\StudentDashboardController;
 
@@ -82,6 +86,39 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function () {
             Route::put('/notes/{note}', 'update');
             Route::delete('/notes/{note}', 'destroy');
         });
+        //videos for admin
+        Route::controller(VideosController::class)->group(function () {
+            Route::get('/videos', 'index');
+            Route::get('/videos/create', 'create');
+            Route::post('/videos', 'store');
+            Route::get('/videos/{video}', 'show');
+            Route::get('/videos/{video}/edit', 'edit');
+            Route::put('/videos/{video}', 'update');
+            Route::delete('/videos/{video}', 'destroy');
+        });
+         //exams for admin
+         Route::controller(ExamController::class)->group(function () {
+            Route::get('/exams', 'index');
+            Route::get('/exams/create', 'create');
+            Route::post('/exams', 'store');
+            Route::get('/exams/{exam}', 'show');
+            Route::get('/exams/{exam}/edit', 'edit');
+            Route::put('/exams/{exam}', 'update');
+            Route::delete('/exams/{exam}', 'destroy');
+        });
+
+         //questions for admin
+         Route::controller(QuestionController::class)->group(function () {
+            Route::get('/questions', 'index');
+            Route::get('/questions/create', 'create');
+            Route::post('/questions', 'store');
+            Route::get('/questions/{question}', 'show');
+            Route::get('/questions/{question}/edit', 'edit');
+            Route::put('/questions/{question}', 'update');
+            Route::delete('/questions/{question}', 'destroy');
+        });
+
+
     });
 
 Route::prefix('student')->middleware(['auth','isStudent'])->group(function () {

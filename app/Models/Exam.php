@@ -16,8 +16,8 @@ class Exam extends Model
         'class_id',
     ];
 
-    public function courseClass()
+    public function Classes()
     {
-        return $this->belongsTo(CourseClass::class, 'class_id');
+        return $this->belongsTo(Classes::class, 'class_id');
     }
 }
