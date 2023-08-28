@@ -29,44 +29,40 @@ class QuestionController extends Controller
 
 
 
-  // Controller: QuestionController.php
+    // Store a newly created question in the database
+    public function store(Request $request)
+    {
+        $request->validate([
+            'exam_id' => 'required|exists:exams,id',
+            'questions' => 'required|array',
+            'questions.*' => 'required|string',
+            'options' => 'required|array',
+            'options.*.text' => 'required|string',
+            'correct_answers' => 'required|array',
+            'correct_answers.*' => 'required|in:A,B,C,D', // Adjust validation based on your needs
+        ]);
 
-// Store newly created questions in the database
-public function store(Request $request)
-{
-    $request->validate([
-        'exam_id' => 'required|exists:exams,id',
-        'questions' => 'required|array',
-        'questions.*' => 'required|string',
-        'options' => 'required|array',
-        'options.*' => 'array',
-        'options.*.text' => 'required|string',
-        'correct_answers' => 'required|array',
-        'correct_answers.*' => 'required|in:A,B,C,D', // Adjust validation based on your needs
-    ]);
 
-    foreach ($request->input('questions') as $key => $questionText) {
         $questionData = [
-            'question_text' => $questionText,
-            'exam_id' => $request->input('exam_id'),
+            'question_text' => $request->input('questions')[0], // Assuming only one question is added here
+            'exam_id' => $request->input('exam_id'), // Use the selected exam_id
         ];
 
         $question = Question::create($questionData);
 
         $optionsData = [];
-        foreach ($request->input('options')[$key] as $index => $option) {
+        foreach ($request->input('options') as $index => $option) {
             $optionsData[] = [
                 'option_text' => $option['text'],
-                'is_correct_option' => ($request->input('correct_answers')[$key] == chr(65 + $index)), // Check if this option is correct
+                'is_correct_option' => ($request->input('correct_answers')[0] == chr(65 + $index)), // Check if this option is correct
             ];
         }
 
         $question->AnswerOption()->createMany($optionsData);
-    }
 
-    return redirect('admin/questions')
-        ->with('success', 'Questions and options created successfully.');
-}
+        return redirect('admin/questions')
+            ->with('success', 'Question and options created successfully.');
+    }
 
    // Show the form for editing the specified question
    public function show(Question $question)
