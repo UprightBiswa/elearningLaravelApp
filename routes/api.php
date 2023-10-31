@@ -34,24 +34,36 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware('auth:api')->group(function () {
     // Student Dashboard
     Route::get('/student/dashboard', [StudentDashboardController::class, 'index']);
-
+    Route::get('/students', [StudentDashboardController::class, 'getStudentsList']);
     // Courses and Subjects
     Route::get('/student/courses', [CourseController::class, 'index']);
     Route::get('/student/courses/{course}', [CourseController::class, 'show']);
+    // Enroll in a course
+    Route::post('/student/courses/{courseId}/enroll', [CourseController::class, 'enroll']);
+    // Retrieve enrolled courses for a user
+    Route::get('/student/enrolled-courses', [CourseController::class, 'enrolledCourses']);
+    // Classess for  courses
+    Route::get('/student/courses/{courseId}/coursesclasses', [CourseController::class,'classesForCourse']);
+
 
     // Notes
     Route::get('/student/notes', [NotesController::class, 'index']);
     Route::get('/student/notes/{note}', [NotesController::class, 'show']);
+    Route::get('/student/classes/{classId}/notes', [NotesController::class, 'classNotes']);
 
     // Videos
     Route::get('/student/videos', [VideosController::class, 'index']);
     Route::get('/student/videos/{video}', [VideosController::class, 'show']);
+    Route::get('/student/classes/{classId}/videos', [VideosController::class, 'classVideos']);
 
     // Exams
     Route::get('/student/exams', [ExamController::class, 'index']);
     Route::get('/student/exams/{exam}', [ExamController::class, 'show']);
+    Route::get('/student/classes/{classId}/exams', [ExamController::class, 'classExams']);
 
     // Classes (add this route)
     Route::get('/student/classes', [ClassController::class, 'index']);
     Route::get('/student/classes/{class}', [ClassController::class, 'show']);
+    Route::get('/student/courses/{courseId}/classes', [ClassController::class, 'enrolledCourseClasses']);
+
 });

@@ -105,7 +105,7 @@ class StudentController extends Controller
             'name' => 'required',
             'email' => ['required', 'email', Rule::unique('users')->ignore($student->id)],
             'phone_number' => 'required',
-            'password' => 'required',
+           // 'password' => 'required',
             'address' => 'required',
             'status' => 'required|in:0,1',
         ]);
@@ -113,7 +113,7 @@ class StudentController extends Controller
         $student->name = $validatedData['name'];
         $student->email = $validatedData['email'];
         $student->phone_number = $validatedData['phone_number'];
-        $student->password =Hash::make($validatedData['password']);
+        //$student->password =Hash::make($validatedData['password']);
         $student->address = $validatedData['address'];
         $student->status = $validatedData['status'];
         $student->save();

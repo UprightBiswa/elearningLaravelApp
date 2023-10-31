@@ -46,12 +46,12 @@
                                                 value="{{ old('email', $student->email) }}">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                    {{-- <div class="col-lg-6 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label class="form-label">Password</label>
                                             <input type="password" name="password" class="form-control" value="{{ old('password', $student->password) }}">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-6 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label class="form-label">Mobile Number</label>
