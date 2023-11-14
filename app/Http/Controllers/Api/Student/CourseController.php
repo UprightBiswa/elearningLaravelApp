@@ -88,4 +88,41 @@ class CourseController extends Controller
         // Return the class names and the total number of classes for the course as a JSON response
         return response()->json(['course_classes' => $classNames, 'total_classes' => count($classes)], 200);
     }
+    public function showCourseData($courseId)
+{
+    $course = Course::find($courseId);
+
+    if (!$course) {
+        return response()->json(['message' => 'Course not found'], 404);
+    }
+
+    // Retrieve related data
+    $data = [
+        'course' => $course,
+        'classes' => $course->classes,
+        'notes' => $course->notes,
+        'videos' => $course->videos,
+        'exams' => $course->exams,
+        'questions' => [],
+    ];
+
+    // Retrieve questions and answers for each exam
+    foreach ($data['exams'] as $exam) {
+        $questions = $exam->questions;
+        $data['questions'][$exam->id] = [
+            'exam' => $exam,
+            'questions' => $questions,
+            'answers' => [],
+        ];
+
+        // Retrieve answers for each question
+        foreach ($questions as $question) {
+            $answers = $question->answers;
+            $data['questions'][$exam->id]['answers'][$question->id] = $answers;
+        }
+    }
+
+    return response()->json(['course_data' => $data], 200);
+}
+
 }

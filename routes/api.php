@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Api\Student\QuestionController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Student\ExamController;
 use App\Http\Controllers\Api\Auth\RegisterController;
@@ -44,6 +45,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/student/enrolled-courses', [CourseController::class, 'enrolledCourses']);
     // Classess for  courses
     Route::get('/student/courses/{courseId}/coursesclasses', [CourseController::class,'classesForCourse']);
+    Route::get('/courses/{courseId}', [CourseController::class,'showCourseData']);
+
 
 
     // Notes
@@ -60,6 +63,10 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/student/exams', [ExamController::class, 'index']);
     Route::get('/student/exams/{exam}', [ExamController::class, 'show']);
     Route::get('/student/classes/{classId}/exams', [ExamController::class, 'classExams']);
+
+    // Qustions and options (add this route)
+    Route::get('/student/exams/{examId}/questions', [QuestionController::class, 'index']);
+    Route::post('/student/exams/{examId}/questions/submit', [QuestionController::class, 'submitAnswers']);
 
     // Classes (add this route)
     Route::get('/student/classes', [ClassController::class, 'index']);

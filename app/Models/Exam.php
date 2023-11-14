@@ -17,8 +17,12 @@ class Exam extends Model
         'class_id',
     ];
 
-    public function Classes()
+    public function classes()
     {
         return $this->belongsTo(Classes::class, 'class_id');
+    }
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
     }
 }
