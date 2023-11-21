@@ -36,7 +36,23 @@ class Classes extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+    /**
+     * Get all information about the class, including notes, videos, and exams.
+     *
+     * @return array
+     */
+    public function getClassDetails()
+    {
+        $classDetails = [
+            'class' => $this,
+            'course' => $this->course,
+            'notes' => $this->notes,
+            'videos' => $this->videos,
+            'exams' => $this->exams,
+        ];
 
+        return $classDetails;
+    }
     /**
      * Define the relationship with the Course model.
      *

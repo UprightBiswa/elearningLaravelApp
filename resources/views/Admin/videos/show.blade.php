@@ -102,9 +102,9 @@
                                 <h4 class="text-primary">View video</h4>
                                 <!-- Display PDF using <object> element -->
                                 <div class="embed-responsive embed-responsive-16by9">
-                                    <object data="{{ asset('storage/' . $video->video_file) }}" type="application/pdf" class="embed-responsive-item">
+                                    <object data="{{ url($video->video_file) }}" type="video/mp4" class="embed-responsive-item">
                                         <!-- If PDF is not supported, show a message or link -->
-                                        <p>Your browser does not support PDF viewing. You can <a href="{{ asset('storage/' . $video->video_file) }}">download the PDF</a> instead.</p>
+                                        <p>Your browser does not support PDF viewing. You can <a href="{{ url($video->video_file) }}">download the PDF</a> instead.</p>
                                     </object>
                                 </div>
                             </li>

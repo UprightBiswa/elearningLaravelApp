@@ -45,7 +45,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/student/enrolled-courses', [CourseController::class, 'enrolledCourses']);
     // Classess for  courses
     Route::get('/student/courses/{courseId}/coursesclasses', [CourseController::class,'classesForCourse']);
-    Route::get('/courses/{courseId}', [CourseController::class,'showCourseData']);
 
 
 
@@ -72,5 +71,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/student/classes', [ClassController::class, 'index']);
     Route::get('/student/classes/{class}', [ClassController::class, 'show']);
     Route::get('/student/courses/{courseId}/classes', [ClassController::class, 'enrolledCourseClasses']);
+    Route::get('/student/courses/{courseId}/classes', [ClassController::class, 'enrolledCourseClasses']);
+    Route::get('/student/classes/{classId}/details', [ClassController::class,'showCourseData']);
+    Route::get('/student/classes/enrolledclasses/userclass', [ClassController::class,'enrolledClassesForUser']);
 
 });

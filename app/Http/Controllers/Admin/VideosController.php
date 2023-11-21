@@ -47,8 +47,10 @@ class VideosController extends Controller
 
         if ($request->hasFile('video_file')) {
             $file = $request->file('video_file');
-            $filePath = $file->store('videos', 'public');
-            $videoData['video_file'] = $filePath;
+            $folder = public_path('videos');
+            $filename = uniqid() . '_' . $file->getClientOriginalName();
+            $file->move($folder, $filename);
+            $videoData['video_file'] = 'videos/' . $filename;
         }
 
         $videoData['video_date'] = Carbon::createFromFormat('d F, Y', $videoData['video_date'])->format('Y-m-d');

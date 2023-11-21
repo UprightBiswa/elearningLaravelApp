@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use App\Models\Note;
-
+use Illuminate\Support\Facades\Log;
 use App\Models\Role;
 use App\Models\Classes;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class NotesController extends Controller
 {
@@ -51,8 +52,16 @@ class NotesController extends Controller
 
         if ($request->hasFile('note_file')) {
             $file = $request->file('note_file');
-            $filePath = $file->store('notes', 'public');
-            $noteData['note_file'] = $filePath;
+            // Specify the folder within the public directory where you want to store the file
+            $folder = public_path('notes');
+            // Generate a unique filename for the uploaded file
+            $filename = uniqid() . '_' . $file->getClientOriginalName();
+            // Move the file to the public directory
+            $file->move($folder, $filename);
+            // Set the file path in the $noteData array
+            $noteData['note_file'] = 'notes/' . $filename;
+            // $filePath = $file->store('notes', 'public');
+            // $noteData['note_file'] = $filePath;
         }
 
         $noteData['note_date'] = Carbon::createFromFormat('d F, Y', $noteData['note_date'])->format('Y-m-d');
@@ -81,11 +90,11 @@ class NotesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-{
-    $note = Note::findOrFail($id);
-    $classes = Classes::all(); // Fetch classes from your model
-    return view('Admin.notes.edit', compact('note', 'classes'));
-}
+    {
+        $note = Note::findOrFail($id);
+        $classes = Classes::all(); // Fetch classes from your model
+        return view('Admin.notes.edit', compact('note', 'classes'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -131,7 +140,4 @@ class NotesController extends Controller
 
         return redirect('admin/notes')->with('status', 'note member deleted successfully.');
     }
-
 }
-
-

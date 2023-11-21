@@ -29,14 +29,17 @@ class Course extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+    // public function users()
+    // {
+    //     return $this->belongsToMany(User::class);
+    // }
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'course_user');
     }
 
     public function classes()
     {
         return $this->hasMany(Classes::class);
     }
-
 }
